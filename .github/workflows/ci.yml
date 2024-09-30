@@ -3,6 +3,7 @@ name: CI
 on:
   push:
     branches:
+      - main
       - dev
 
 jobs:
@@ -18,8 +19,14 @@ jobs:
         with:
           node-version: '16'
 
+      - name: Clean npm cache
+        run: npm cache clean --force
+
       - name: Install dependencies
         run: npm install
+
+      - name: Make jest executable
+        run: chmod +x ./node_modules/.bin/jest
 
       - name: Run tests
         run: npm test
